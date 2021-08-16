@@ -27,7 +27,7 @@ public class HibernateUtil {
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
-            System.err.println("Fallo inicial en la creaci�n de un SessionFactory." + ex);
+            System.err.println("Fallo inicial en la creación de un SessionFactory." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
@@ -60,7 +60,7 @@ public class HibernateUtil {
             createStatement();
             st.executeUpdate(sql);
         } catch (Exception e) {
-            System.err.println("Sucedio nuna Excepcion! ");
+            System.err.println("Ha ocuriido una Excepción! ");
             e.printStackTrace();
             System.exit(0);
         }
@@ -72,7 +72,7 @@ public class HibernateUtil {
             conn = DriverManager.getConnection(url, username, password);
             st = conn.createStatement();
         } catch (Exception e) {
-            System.err.println("Sucedio una Excepción! ");
+            System.err.println("Ha ocurrido una Excepción! ");
             e.printStackTrace();
             System.exit(0);
         }
@@ -89,7 +89,7 @@ public class HibernateUtil {
 
     public static void checkData(String sql) {
         String[] starray = sql.split(" ");
-        System.out.println("\n******** Tabla: " + starray[starray.length - 1] + " *******");
+        System.out.println("\n*+*+*+*+*+*+ Tabla: " + starray[starray.length - 1] + " *+*+*+*+*+*");
         try {
             createStatement();
             ResultSet r = st.executeQuery(sql);
