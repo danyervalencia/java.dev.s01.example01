@@ -72,7 +72,7 @@ public class HibernateUtil {
             conn = DriverManager.getConnection(url, username, password);
             st = conn.createStatement();
         } catch (Exception e) {
-            System.err.println("Sucedio una Excepci�n! ");
+            System.err.println("Sucedio una Excepción! ");
             e.printStackTrace();
             System.exit(0);
         }
@@ -94,7 +94,7 @@ public class HibernateUtil {
             createStatement();
             ResultSet r = st.executeQuery(sql);
             HibernateUtil.outputResultSet(r);
-//			conn.close();
+            //conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,5 +171,4 @@ public class HibernateUtil {
         for (int i = 0; i < len; i++)
             b.setCharAt(pos + i, s.charAt(i));
     }
-
 }
