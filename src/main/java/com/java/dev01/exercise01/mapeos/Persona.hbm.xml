@@ -2,11 +2,14 @@
 <!DOCTYPE hibernate-mapping
         PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-    <class name="com.java.dev01.exercise01.pojos.Persona" table="empleado">
-        <id name="id" type="int"> <!-- column="id" si se va usar el mismo nombre en name no es necesario poner-->
+<hibernate-mapping> <!-- Mapeo ORM -->
+    <class name="com.java.dev01.exercise01.pojos.Persona" table="personas">
+        <!-- Solo puede haber un atributo id dentro de class -->
+        <id name="persId" column="pers_id" type="int"> <!-- si column es igual a name, no es necesario usar column -->
             <generator class="increment"/>
         </id>
-        <property name="nombre" column="cnombre" type="string"/> <!-- column = es el nombre del campo en la tabla -->
+        <property name="persPaternal" column="pers_paternal" type="string"/><!-- column = es el nombre del campo en la tabla -->
+        <property name="persMaternal" column="pers_maternal" type="string"/>
+        <property name="persName" column="pers_name" type="string"/>
     </class>
 </hibernate-mapping>

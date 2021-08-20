@@ -17,13 +17,14 @@ public class HibernateUtil {
     public static String dbdriver = "com.mysql.cj.jdbc.Driver";
     public static String username = "root";
     public static String password = "123456";
-
     public static final SessionFactory sessionFactory;
+    public static final ThreadLocal session = new ThreadLocal();
+    static Connection conn;
+    static Statement st;
 
     static {
         try {
-            // Crea un SessionFactory y un objeto Session
-            //SessionFactory sessions = configuration.buildSessionFactory(serviceRegistry);
+            // Crea un SessionFactory
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
@@ -32,9 +33,7 @@ public class HibernateUtil {
         }
     }
 
-    public static final ThreadLocal session = new ThreadLocal();
-
-    public static Session currentSession() throws HibernateException {
+    public static Session sessionCurrent() throws HibernateException {
         Session s = (Session) session.get();
         // Open a new Session, if this thread has none yet
         if (s == null) {
@@ -45,22 +44,19 @@ public class HibernateUtil {
         return s;
     }
 
-    public static void closeSession() throws HibernateException {
+    public static void sessionClose() throws HibernateException {
         Session s = (Session) session.get();
         if (s != null)
             s.close();
         session.set(null);
     }
 
-    static Connection conn;
-    static Statement st;
-
-    public static void setup(String sql) {
+    public static void sqlExecute(String sql) {
         try {
             createStatement();
             st.executeUpdate(sql);
         } catch (Exception e) {
-            System.err.println("Ha ocuriido una Excepción! ");
+            System.err.println("Ha ocurrido una Excepción! ");
             e.printStackTrace();
             System.exit(0);
         }
@@ -78,8 +74,8 @@ public class HibernateUtil {
         }
     }
 
-    // Drop table if exists
-    public static void droptable(String sql) {
+    // Elimina tabla si existe
+    public static void tableDrop(String sql) {
         try {
             createStatement();
             st.executeUpdate(sql);
@@ -87,20 +83,20 @@ public class HibernateUtil {
         }
     }
 
-    public static void checkData(String sql) {
-        String[] starray = sql.split(" ");
-        System.out.println("\n*+*+*+*+*+*+ Tabla: " + starray[starray.length - 1] + " *+*+*+*+*+*");
+    public static void dataSelect(String sql) {
+        String[] sqlSplit = sql.split(" ");
+        System.out.println("\n*+*+*+*+*+* Tabla: " + sqlSplit[sqlSplit.length - 1] + " *+*+*+*+*+*");
         try {
             createStatement();
             ResultSet r = st.executeQuery(sql);
-            HibernateUtil.outputResultSet(r);
+            HibernateUtil.resultsetOut(r);
             //conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void outputResultSet(ResultSet rs) throws Exception {
+    public static void resultsetOut(ResultSet rs) throws Exception {
         ResultSetMetaData metadata = rs.getMetaData();
 
         int numcols = metadata.getColumnCount();

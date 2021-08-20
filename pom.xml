@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>exercise01</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.java</groupId>
+    <artifactId>dev01_exercise01</artifactId>
+    <version>1.0-JAVA-HIBERNATE</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -25,9 +25,9 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
         </dependency>
-
     </dependencies>
-    <build> <!--  -->
+
+    <build>
         <resources>
             <resource>
                 <directory>src/main/java</directory>

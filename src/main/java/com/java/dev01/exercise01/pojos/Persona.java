@@ -4,30 +4,49 @@ import java.io.Serializable;
 
 public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
-    private int id;
-    private String nombre;
+    private int persId;
+    private String persPaternal;
+    private String persMaternal;
+    private String persName;
 
     public Persona() {
     }
 
-    public Persona(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
+    public Persona(int persId, String persPaternal, String persName) {
+        this.persId = persId;
+        this.persPaternal = persPaternal;
+        this.persName = persName;
     }
 
-    public int getId() {
-        return id;
+    public int getPersId() {
+        return this.persId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersId(int persId) {
+        this.persId = persId;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getPersPaternal() {
+        return this.persPaternal;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setPersPaternal(String persPaternal) {
+        this.persPaternal = persPaternal;
+    }
+
+    public String getPersMaternal() {
+        return this.persMaternal;
+    }
+
+    public void setPersMaternal(String persMaternal) {
+        this.persMaternal = persMaternal;
+    }
+
+    public String getPersName() {
+        return this.persName;
+    }
+
+    public void setPersName(String persName) {
+        this.persName = persName;
     }
 }
