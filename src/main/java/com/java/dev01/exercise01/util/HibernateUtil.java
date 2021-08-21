@@ -5,18 +5,17 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-    // Database configuration
     public static String url = "jdbc:mysql://localhost/escuela?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     public static String dbdriver = "com.mysql.cj.jdbc.Driver";
     public static String username = "root";
     public static String password = "123456";
+
     public static final SessionFactory sessionFactory;
     public static final ThreadLocal session = new ThreadLocal();
     static Connection conn;
@@ -24,42 +23,27 @@ public class HibernateUtil {
 
     static {
         try {
-            // Crea un SessionFactory
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
             System.err.println("Fallo inicial en la creación de un SessionFactory." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
 
     public static Session sessionCurrent() throws HibernateException {
-        Session s = (Session) session.get();
-        // Open a new Session, if this thread has none yet
-        if (s == null) {
-            s = sessionFactory.openSession();
-            // Store it in the ThreadLocal variable
-            session.set(s);
+        Session sess = (Session) session.get();
+        if (sess == null) {
+            sess = sessionFactory.openSession();
+            session.set(sess);
         }
-        return s;
+        return sess;
     }
 
     public static void sessionClose() throws HibernateException {
-        Session s = (Session) session.get();
-        if (s != null)
-            s.close();
+        Session sess = (Session) session.get();
+        if (sess != null)
+            sess.close();
         session.set(null);
-    }
-
-    public static void sqlExecute(String sql) {
-        try {
-            createStatement();
-            st.executeUpdate(sql);
-        } catch (Exception e) {
-            System.err.println("Ha ocurrido una Excepción! ");
-            e.printStackTrace();
-            System.exit(0);
-        }
     }
 
     public static void createStatement() {
@@ -67,6 +51,17 @@ public class HibernateUtil {
             Class.forName(dbdriver);
             conn = DriverManager.getConnection(url, username, password);
             st = conn.createStatement();
+        } catch (Exception e) {
+            System.err.println("Ha ocurrido una Excepción! ");
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public static void sqlExecute(String sql) {
+        try {
+            createStatement();
+            st.executeUpdate(sql);
         } catch (Exception e) {
             System.err.println("Ha ocurrido una Excepción! ");
             e.printStackTrace();
@@ -130,9 +125,6 @@ public class HibernateUtil {
             divider.setCharAt(colpos[i] - 1, '+');
         divider.setCharAt(linewidth - 1, '+');
 
-        // Begin the table output with a divider line
-        System.out.println(divider);
-
         // The next line of the table contains the column labels.
         // Begin with a blank line, and put the column names and column
         // divider characters "|" into it. overwrite() is defined below.
@@ -143,8 +135,6 @@ public class HibernateUtil {
             overwrite(line, pos, labels[i]);
             overwrite(line, colpos[i] + colwidths[i], " |");
         }
-        System.out.println(line);
-        System.out.println(divider);
 
         while (rs.next()) {
             line = new StringBuffer(blankline.toString());
@@ -159,7 +149,6 @@ public class HibernateUtil {
             System.out.println(line);
         }
         System.out.println(divider);
-
     }
 
     static void overwrite(StringBuffer b, int pos, String s) {
