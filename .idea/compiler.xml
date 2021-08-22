@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="dev01_exercise01" />
         <module name="s01_dev_ejemplo01" />
+        <module name="dev_s01_example01" />
       </profile>
     </annotationProcessing>
   </component>

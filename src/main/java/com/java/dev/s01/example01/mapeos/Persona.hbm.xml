@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping> <!-- Mapeo ORM -->
-    <class name="com.java.dev01.exercise01.pojos.Persona" table="personas">
+    <class name="com.java.dev.s01.example01.entities.Persona" table="personas">
         <!-- Solo puede haber un atributo id dentro de class -->
         <id name="persId" column="pers_id" type="int"> <!-- si column es igual a name, no es necesario usar column -->
             <generator class="increment"/>
